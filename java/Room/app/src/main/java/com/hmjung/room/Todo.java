@@ -34,9 +34,7 @@ public class Todo {
 
     @Override
     public String toString() {
-        return "Todo{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
+        return  "id=" + id +"\n"+
+                "title=" + title + "\n";
     }
 }
