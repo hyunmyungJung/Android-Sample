@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         mResult_tv = findViewById(R.id.result_tv);
 
         final AppDatabase db = Room.databaseBuilder(this, AppDatabase.class, "todo-db") // todo-db라는 데이터베이스 파일이 실제 작성됨.
-                .allowMainThreadQueries()   // db는 백그라운드 스레드에서 동작하도록 작성해야함, 예제는 실습을 위해 메인 스레드에서 사용할 수 있도록 함.
+//                .allowMainThreadQueries()   // db는 백그라운드 스레드에서 동작하도록 작성해야함, 예제는 실습을 위해 메인 스레드에서 사용할 수 있도록 함.  // 비동기 처리로 삭제됨.
                 .build();
 
         // UI 갱신
