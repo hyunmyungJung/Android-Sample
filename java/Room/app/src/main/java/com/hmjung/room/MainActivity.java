@@ -1,12 +1,15 @@
 package com.hmjung.room;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,17 +27,17 @@ public class MainActivity extends AppCompatActivity {
         mResult_tv = findViewById(R.id.result_tv);
 
         final AppDatabase db = Room.databaseBuilder(this, AppDatabase.class, "todo-db") // todo-db라는 데이터베이스 파일이 실제 작성됨
-                .allowMainThreadQueries()   // db는 백그라운드 스레드에서 동작하도록 작성해야함, 예제는 실습을 위해 메인 스레드에서 사용할 수 있도록 함
+                .allowMainThreadQueries()   // db는 백그라운드 스레드에서 동작하도록 작성해야함, 예제는 실습을 위해 메인 스레드에서 사용할 수 있도록 함.
                 .build();
 
-        mResult_tv.setText(db.todoDao().getAll().toString());
+        // UI 갱신
+        db.todoDao().getAll().observe(this, todos -> {
+            mResult_tv.setText(todos.toString());
+        });
 
-        findViewById(R.id.save_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.todoDao().insert(new Todo(mInsert_et.getText().toString()));
-                mResult_tv.setText(db.todoDao().getAll().toString());
-            }
+        // 버튼 클릭시 DB에 insert
+        findViewById(R.id.save_btn).setOnClickListener(v -> {
+            db.todoDao().insert(new Todo(mInsert_et.getText().toString()));
         });
     }
 
